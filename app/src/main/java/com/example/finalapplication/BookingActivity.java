@@ -2,8 +2,10 @@ package com.example.finalapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +14,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class BookingActivity extends AppCompatActivity {
+    private static final String TAG = "BookingActivity";
 
     private Button btnMainPage;
     private Button btnConfirmBooking;
@@ -23,6 +34,7 @@ public class BookingActivity extends AppCompatActivity {
     private EditText etTime;
     private EditText etNotes;
     private CommunitySpinner communitySpinner;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,21 +83,46 @@ public class BookingActivity extends AppCompatActivity {
         String notes = etNotes.getText().toString();
 
         if (email.isEmpty() || phoneNumber.isEmpty() || date.isEmpty() || postalAddress.isEmpty() || time.isEmpty() || communitySpinner.getSelectedCommunity().isEmpty()) {
-            Toast.makeText(this, "Please enter all details", Toast.LENGTH_SHORT).show();
+            showMessage("Please enter all details");
             return false;
         }
         return true;
     }
 
     private void saveToDatabase() {
-        String email = etEmail.getText().toString();
-        String phoneNumber = etPhoneNumber.getText().toString();
-        String date = etDate.getText().toString();
-        String postalAddress = etPostalAddress.getText().toString();
-        String time = etTime.getText().toString();
-        String notes = etNotes.getText().toString();
+        btnConfirmBooking.setEnabled(false);
 
-        // TODO database stuff
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", etEmail.getText().toString());
+        data.put("phoneNumber", etPhoneNumber.getText().toString());
+        data.put("date", etDate.getText().toString());
+        data.put("postalAddress", etPostalAddress.getText().toString());
+        data.put("time", etTime.getText().toString());
+        data.put("notes", etNotes.getText().toString());
+        data.put("community", communitySpinner.getSelectedCommunity());
+
+        db.collection("bookings")
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Booking added with ID: " + documentReference.getId());
+                        btnConfirmBooking.setEnabled(true);
+                        openMainActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding booking", e);
+                        showMessage("Error adding booking");
+                        btnConfirmBooking.setEnabled(true);
+                    }
+                });
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private class CommunitySpinner implements AdapterView.OnItemSelectedListener {
