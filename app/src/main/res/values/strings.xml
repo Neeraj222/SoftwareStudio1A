@@ -29,7 +29,7 @@
     <string name="view_and_cancel_my_bookings_here">View and Cancel My Bookings Here</string>
 
     <string-array name = "communities">
-        <item>Select A Community From Below Please</item>
+        <item>Select A Community</item>
         <item>Red Army</item>
         <item>Salvation Army</item>
         <item>Family Goods</item>

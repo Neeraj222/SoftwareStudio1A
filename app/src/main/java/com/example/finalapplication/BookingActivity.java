@@ -1,5 +1,6 @@
 package com.example.finalapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class BookingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class BookingActivity extends AppCompatActivity {
 
     private Button btnMainPage;
     private Button btnConfirmBooking;
@@ -21,6 +22,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     private EditText etPostalAddress;
     private EditText etTime;
     private EditText etNotes;
+    private CommunitySpinner communitySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         etPostalAddress = findViewById(R.id.tvPostalAddress);
         etTime = findViewById(R.id.tvTime);
         etNotes = findViewById(R.id.tvAdditionalNotes);
-
-        Spinner spinner = findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.communities, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        communitySpinner = new CommunitySpinner(this);
 
         btnMainPage = findViewById(R.id.btnMainPage);
         btnMainPage.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +55,6 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
-
     }
 
     public void openMainActivity() {
@@ -74,7 +70,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         String time = etTime.getText().toString();
         String notes = etNotes.getText().toString();
 
-        if (email.isEmpty() || phoneNumber.isEmpty() || date.isEmpty() || postalAddress.isEmpty() || time.isEmpty()) {
+        if (email.isEmpty() || phoneNumber.isEmpty() || date.isEmpty() || postalAddress.isEmpty() || time.isEmpty() || communitySpinner.getSelectedCommunity().isEmpty()) {
             Toast.makeText(this, "Please enter all details", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -92,15 +88,29 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         // TODO database stuff
     }
 
+    private class CommunitySpinner implements AdapterView.OnItemSelectedListener {
+        private String selectedCommunity = "";
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-    }
+        CommunitySpinner(Context context) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.communities, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            Spinner spinner = findViewById(R.id.spinner1);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(this);
+        }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+        public String getSelectedCommunity() {
+            return selectedCommunity;
+        }
 
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            selectedCommunity = position == 0 ? "" : parent.getItemAtPosition(position).toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 }
