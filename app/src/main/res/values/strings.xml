@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Final Application</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="number_of_incorrect_attempts">Number of incorrect attempts</string>
+    <string name="name">Name</string>
+    <string name="welcome">Welcome</string>
+    <string name="new_user_sing_up_here">New User ? Sign up here</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already Have An Account ?</string>
+    <string name="click_here">Click Here</string>
+
+    <string name="forgot_password">Forgot Password ?</string>
+
+    <string name="reset_password">Reset Password</string>
+    <string name="enteremail">Enter Email</string>
+    <string name="adresss">address</string>
+
+
+    <string name="view_my_bookings">View My Bookings</string>
+
+    <string name="select_a_community_below_please">Select A Community Below Please</string>
+    <string name="any_addtional_notes_for_the_delivery_pickup_man">Any Additional Notes For the Delivery Pickup Man ?</string>
+
+    <string name="create_a_booking">Create A Booking ?</string>
+    <string name="view_my_donation_history">View My Donation History</string>
+    <string name="logout">Logout</string>
+    <string name="view_and_cancel_my_bookings_here">View and Cancel My Bookings Here</string>
+
+    <string-array name = "communities">
+        <item>Select A Community From Below Please</item>
+        <item>Red Army</item>
+        <item>Salvation Army</item>
+        <item>Family Goods</item>
+        <item>Smith Family</item>
+        <item>Clothing coperates</item>
+        <item>Swiss family </item>
+        <item>City clothing</item>
+        <item>Vinies Army </item>
+        <item>Care Family</item>
+        <item>Donate to us Army</item>
+        <item>Astro Army </item>
+        <item>Blue clothing </item>
+        <item>Watching clothing </item>
+
+
+    </string-array>
+</resources>
