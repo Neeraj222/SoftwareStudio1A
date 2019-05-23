@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,21 +29,28 @@ public class BookingActivity extends AppCompatActivity {
 
     private Button btnMainPage;
     private Button btnConfirmBooking;
-    private EditText etEmail;
     private EditText etPhoneNumber;
     private EditText etDate;
     private EditText etPostalAddress;
     private EditText etTime;
     private EditText etNotes;
+    private String email;
     private CommunitySpinner communitySpinner;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        etEmail = findViewById(R.id.tvEmail);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            finish();
+            startActivity(new Intent(BookingActivity.this, LoginActivity.class));
+        }
+        email = user.getEmail() == null ? "test@gmail.com" : user.getEmail();
+
         etPhoneNumber = findViewById(R.id.tvPhoneNumber);
         etDate = findViewById(R.id.tvDate);
         etPostalAddress = findViewById(R.id.tvPostalAddress);
@@ -75,7 +84,6 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private boolean validate() {
-        String email = etEmail.getText().toString();
         String phoneNumber = etPhoneNumber.getText().toString();
         String date = etDate.getText().toString();
         String postalAddress = etPostalAddress.getText().toString();
@@ -93,7 +101,7 @@ public class BookingActivity extends AppCompatActivity {
         btnConfirmBooking.setEnabled(false);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("email", etEmail.getText().toString());
+        data.put("email", email);
         data.put("phoneNumber", etPhoneNumber.getText().toString());
         data.put("date", etDate.getText().toString());
         data.put("postalAddress", etPostalAddress.getText().toString());
@@ -136,7 +144,7 @@ public class BookingActivity extends AppCompatActivity {
             spinner.setOnItemSelectedListener(this);
         }
 
-        public String getSelectedCommunity() {
+        String getSelectedCommunity() {
             return selectedCommunity;
         }
 

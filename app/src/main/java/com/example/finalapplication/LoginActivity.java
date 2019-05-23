@@ -79,32 +79,29 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validate(String userName, String userPassword) {
 
-        progressDialog.setMessage("Please wait Patienlty");
+        progressDialog.setMessage("Please wait patiently");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(userName, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            if (task.isSuccessful()) {
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
+            } else {
+                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                counter--;
+                Info.setText("No of attempts remaining: " + counter);
+                progressDialog.dismiss();
+                if (counter == 0) {
+                    Login.setEnabled(false);
                 }
-                {
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    counter--;
-                    Info.setText("No of attempts remaining: " + counter);
-                    progressDialog.dismiss();
-                    if (counter == 0) {
-                        Login.setEnabled(false);
-                    }
-                }
+            }
             }
         });
     }
-
-
 }
 
 
