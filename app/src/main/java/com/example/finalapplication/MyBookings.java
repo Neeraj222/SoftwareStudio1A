@@ -1,5 +1,6 @@
 package com.example.finalapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +34,7 @@ public class MyBookings extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private LinearLayout mainLayout;
+    private ProgressDialog progressDialog;
     private TableLayout table;
 
 
@@ -37,6 +42,8 @@ public class MyBookings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bookings);
+
+        progressDialog = new ProgressDialog(this);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
@@ -53,6 +60,9 @@ public class MyBookings extends AppCompatActivity {
 //        table.setColumnShrinkable(0, false);
 //        table.setColumnShrinkable(1, false);
         mainLayout.addView(table);
+        progressDialog.setMessage("Loading Bookings");
+        progressDialog.show();
+
 
         loadBookings();
     }
@@ -65,6 +75,7 @@ public class MyBookings extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+
                             table.addView(createHeaderRow());
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
@@ -81,6 +92,7 @@ public class MyBookings extends AppCompatActivity {
 
                                 table.addView(row);
                             }
+                            progressDialog.dismiss();
                         } else {
                             Log.d(TAG, "Error getting documents: " , task.getException());
                         }
@@ -88,7 +100,7 @@ public class MyBookings extends AppCompatActivity {
                 });
     }
 
-    private View createDeleteButton(String id, final TableRow row) {
+    private View createDeleteButton(final String id, final TableRow row) {
         final Button button = new Button(this);
         button.setText("X");
         button.setOnClickListener(new View.OnClickListener() {
@@ -96,15 +108,25 @@ public class MyBookings extends AppCompatActivity {
             public void onClick(View v) {
                 button.setEnabled(false);
 
-                // TODO remove this (just pretending to delete)
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                table.removeView(row);
+                db.collection("bookings").document(id)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Document " + id + " successfully deleted!");
+                                Toast.makeText(MyBookings.this, "Booking successfully deleted", Toast.LENGTH_SHORT).show();
+                                table.removeView(row);
+                            }
 
-                // TODO actually delete
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document " + id, e);
+                                Toast.makeText(MyBookings.this, "Error deleting the booking", Toast.LENGTH_SHORT).show();
+                                button.setEnabled(true);
+                            }
+                        });
             }
         });
         return button;
