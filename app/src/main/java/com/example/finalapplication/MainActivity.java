@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity<Æ> extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private Button Logout;
     private Button view;
     private Button view2;
     private Button view3;
@@ -51,13 +50,7 @@ public class MainActivity<Æ> extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        Logout = findViewById(R.id.btnLogout);
-        Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logout();
-            }
-        });
+
     }
 
     @Override
@@ -72,7 +65,7 @@ public class MainActivity<Æ> extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.item1:
 //                Toast.makeText(this, "Item 1 Selected",Toast.LENGTH_SHORT).show();
-                Logout();
+                logout();
                 return true;
 
             case R.id.item2:
@@ -100,7 +93,7 @@ public class MainActivity<Æ> extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void Logout() {
+    private void logout() {
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
