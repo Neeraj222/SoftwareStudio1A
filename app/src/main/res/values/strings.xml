@@ -27,6 +27,13 @@
     <string name="view_my_donation_history">View My Donation History</string>
     <string name="logout">Logout</string>
     <string name="view_and_cancel_my_bookings_here">View and Cancel My Bookings Here</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_booking">Confirm Booking</string>
+    <string name="main_page_click_here">Main Page ? Click Here</string>
+    <string name="date">Date</string>
+    <string name="home_address">Home Address</string>
+    <string name="time">Time</string>
+    <string name="any_additional_notes">Any Additional Notes ?</string>
 
     <string-array name = "communities">
         <item>Select A Community</item>

@@ -1,5 +1,6 @@
 package com.example.finalapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button regButton;
     private TextView userLogin;
     private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +41,21 @@ public class RegistrationActivity extends AppCompatActivity {
                     //upload to database
                     String user_email = UserEmail.getText().toString().trim();
                     String user_password = UserPassword.getText().toString().trim();
-
+                    progressDialog.setMessage("Registration Progress.");
+                    progressDialog.show();
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if ((task.isSuccessful()))
                             {
+                                progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Sucessfull", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                             }
 
                             {
+                                progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                             }
 
@@ -75,6 +80,8 @@ public class RegistrationActivity extends AppCompatActivity {
         UserPassword = (EditText) findViewById(R.id.etPassword);
         UserEmail = (EditText) findViewById(R.id.etEmail);
         userLogin = (TextView) findViewById(R.id.tvLogin);
+        progressDialog = new ProgressDialog(this);
+
     }
 
     private Boolean validate() {
