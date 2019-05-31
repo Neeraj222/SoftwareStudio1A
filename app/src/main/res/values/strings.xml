@@ -34,6 +34,17 @@
     <string name="home_address">Home Address</string>
     <string name="time">Time</string>
     <string name="any_additional_notes">Any Additional Notes ?</string>
+    <string name="button">Button</string>
+    <string name="go_back_to_login_page">Go back to login page ?</string>
+    <string name="already_have_an_account_click_here">Already have an account ? Click Here</string>
+    <string name="lastname">LastName</string>
+    <string name="click_to_regsiter">Click To Regsiter</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="clothing_coperates">Clothing Coperates</string>
+    <string name="making_donating_clothes_one_step_easier">Making donating clothes one step easier</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
 
     <string-array name = "communities">
         <item>Select A Community</item>

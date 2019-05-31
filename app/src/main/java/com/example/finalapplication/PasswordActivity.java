@@ -18,6 +18,7 @@ public class PasswordActivity extends AppCompatActivity {
     private EditText Email;
     private FirebaseAuth firebaseAuth;
     private Button resetPassword;
+    private Button button1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +26,21 @@ public class PasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_password);
 
         Email = findViewById(R.id.etEmail);
+        button1 = findViewById(R.id.btnLoginPage);
         resetPassword = findViewById(R.id.btnPasswordReset);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        button1 = findViewById(R.id.btnLoginPage);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenLoginPage();
+            }
+        });
+
+
+
+
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +68,11 @@ public class PasswordActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void  OpenLoginPage(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 

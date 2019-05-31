@@ -76,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setupUIViews() {
-        UserName = (EditText) findViewById(R.id.etUserName);
+        UserName = (EditText) findViewById(R.id.etLastName);
         UserPassword = (EditText) findViewById(R.id.etPassword);
         UserEmail = (EditText) findViewById(R.id.etEmail);
         userLogin = (TextView) findViewById(R.id.tvLogin);
