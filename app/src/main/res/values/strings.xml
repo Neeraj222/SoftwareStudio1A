@@ -4,7 +4,7 @@
     <string name="login">Login</string>
     <string name="number_of_incorrect_attempts">Number of incorrect attempts</string>
     <string name="name">Name</string>
-    <string name="welcome">Welcome</string>
+
     <string name="new_user_sing_up_here">New User ? Sign up here</string>
     <string name="email">Email</string>
     <string name="register">Register</string>
@@ -45,6 +45,11 @@
     <string name="making_donating_clothes_one_step_easier">Making donating clothes one step easier</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
+    <string name="its_time_to_give_it">Its time to give it</string>
+    <string name="choose_what_you_want_to_do_from_below">Choose what you want to do from below ?</string>
+    <string name="choose_what_you_want_to_do_below">Choose what you want to do below ?</string>
+    <string name="magicians_coperates">Magicians Coperates</string>
+    <string name="welcome">Welcome</string>
 
     <string-array name = "communities">
         <item>Select A Community</item>

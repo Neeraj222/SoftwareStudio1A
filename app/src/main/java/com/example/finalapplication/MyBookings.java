@@ -34,6 +34,7 @@ public class MyBookings extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private LinearLayout mainLayout;
+    private Button button;
     private ProgressDialog progressDialog;
     private TableLayout table;
 
@@ -42,6 +43,14 @@ public class MyBookings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bookings);
+
+        button = findViewById(R.id.btnGoback);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenMainActivity();
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
 
@@ -147,5 +156,10 @@ public class MyBookings extends AppCompatActivity {
         cell.setTextSize(17);
         cell.setMinWidth(1000);
         return cell;
+    }
+
+    public void OpenMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
