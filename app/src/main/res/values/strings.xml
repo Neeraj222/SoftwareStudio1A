@@ -50,6 +50,17 @@
     <string name="choose_what_you_want_to_do_below">Choose what you want to do below ?</string>
     <string name="magicians_coperates">Magicians Coperates</string>
     <string name="welcome">Welcome</string>
+    <string name="magicians_corporates">Magicians Corporates</string>
+    <string name="copyright_magicians_corporates_2019">Copyright © Magicians Corporates 2019</string>
+    <string name="what_i_donated">What I Donated</string>
+    <string name="my_donation_history">My Donation History</string>
+
+    <string name="donated_to">Donated To</string>
+    <string name="textview">TextView</string>
+    <string name="male_clothing_kids_clothing_and_shoes">Male clothing, Kids Clothing and Shoes</string>
+    <string name="neeraj">Neeraj</string>
+    <string name="gangrade">Gangrade</string>
+    <string name="smiths_community_red_amry_and_clothing_coporates">Smiths Community, Red Amry and Clothing Coporates</string>
 
     <string-array name = "communities">
         <item>Select A Community</item>
